@@ -105,7 +105,7 @@ update_shape()
     unsigned int color = (blue << 11) | (green << 5) | red;
     fillRectangle(startCol, row+step, width, 1, color);
     fillRectangle(startCol, row-step, width, 1, color);
-    if (switches & SW3) green = (green + 10) % 64;
+    if (switches & SW3) green = (green + 1) % 64;
     if (switches & SW2) blue = (blue + 2) % 32;
     if (switches & SW1) red = (red - 3) % 32;
     step ++;
@@ -124,3 +124,4 @@ __interrupt_vec(PORT2_VECTOR) Port_2(){
     switch_interrupt_handler();	/* single handler for all switches */
   }
 }
+
