@@ -46,20 +46,121 @@ switch_interrupt_handler()
 
 // axis zero for col, axis 1 for row
 short drawPos[2] = {10,10}, controlPos[2] = {10,10};
-short velocity[2] = {3,8}, limits[2] = {screenWidth-36, screenHeight-8};
+short velocityArray[2] = {3,8}, limits[2] = {screenWidth-36, screenHeight-8};
 
-short redrawScreen = 1;
+short refresh = 1;
 u_int controlFontColor = COLOR_GREEN;
+u_char currentRow = 10;
+u_char nextRow = 10;
+signed char velocity = 1;
 
 void wdt_c_handler()
 {
-  static int secCount = 0;
+  static int secCount = 0, secondCount =0;
 
-  secCount ++;
-  if (secCount >= 25) {		/* 10/sec */
+  secCount++;
+  secondCount++;
+  //if (secCount >= 25) {		/* 10/sec */
+  //  secCount = 0;
+  //  redrawScreen = 1;
+  //}
+  if(secCount == 250) {
     secCount = 0;
-    redrawScreen = 1;
+    refresh = 1;
   }
+  if(secondCount == 25) {
+    secondCount = 0;
+    nextRow += velocity;
+    if(nextRow > 30 || nextRow < 10) {
+      velocity = -velocity;
+      nextRow += velocity;
+    }
+    refresh = 1;
+  }
+}
+
+void fillTriangle(u_char positionCol, u_char positionRow, u_char size, u_int color)
+{
+  for(int row = 0; row <= size; row++) {
+    for(int col = 0; col <= size - row; col++) {
+      drawPixel(positionCol + col, positionRow + row, color);
+      drawPixel(positionCol - col, positionRow + row, color);
+    }
+  }
+}
+
+void fillHeart(u_char positionCol, u_char positionRow, u_char size, u_int color)
+{
+  int i, j;
+  for(i = size/2; i <= size; i+=2){
+    for(j = 1; j < i; j++){
+      drawPixel(positionCol, positionRow + i, color);      // connect left and right upprt half 
+      drawPixel(positionCol + j, positionRow + i, color);  // right side of upper half of <3
+      drawPixel(positionCol - j, positionRow + i, color);  // left side of upper half of <3
+    }
+  }
+  fillTriangle(positionCol, positionRow+i, size, color);
+}
+
+void fillDiamond(u_char positionCol, u_char positionRow, u_char size, u_int color)
+{
+  for(int row = 0; row <= size; row++) {
+    for(int col = 0; col <= size - row; col++) {
+      drawPixel(positionCol + col, positionRow - row, color);
+      drawPixel(positionCol - col, positionRow - row, color);
+    }
+  }
+  fillTriangle(positionCol, positionRow, size, color);
+}
+
+void state_button1() {
+  if(refresh) {
+    refresh = 0;
+    fillTriangle(60, nextRow, 30, COLOR_BLUE);
+    fillTriangle(60, nextRow, 30, COLOR_WHITE);
+    currentRow = nextRow;
+  }
+};
+
+void state_button2() {
+  if(refresh) {
+    refresh = 0;
+    int heartRow = nextRow + 60;
+    fillHeart(60, heartRow, 20, COLOR_BLUE);
+    fillHeart(60, heartRow, 20, COLOR_WHITE);
+    currentRow = nextRow;
+  }
+};
+
+void state_button3() {
+  if(refresh) {
+    refresh = 0;
+    int diamondCol = nextRow + 45;
+    fillDiamond(30, diamondCol, 15, COLOR_BLUE);
+    fillDiamond(30, diamondCol, 15, COLOR_WHITE);
+    
+    fillDiamond(90, diamondCol, 15, COLOR_BLUE);
+    fillDiamond(90, diamondCol, 15, COLOR_WHITE);
+    currentRow = nextRow;
+  }
+};
+
+void state_button4() { clearScreen(COLOR_BLUE); };
+
+void default_state() {
+  if(refresh) {
+    refresh = 0;
+    currentRow = nextRow;
+  }
+};
+
+void selectState()
+{
+  if (switches & SW1) state_button1();
+  else if (switches & SW2) state_button2();
+  else if (switches & SW3) state_button3();
+  else if (switches & SW4) state_button4();
+  else default_state();
 }
   
 void update_shape();
@@ -78,10 +179,7 @@ void main()
   
   clearScreen(COLOR_BLUE);
   while (1) {			/* forever */
-    if (redrawScreen) {
-      redrawScreen = 0;
-      update_shape();
-    }
+    selectState();
     P1OUT &= ~LED;	/* led off */
     or_sr(0x10);	/**< CPU OFF */
     P1OUT |= LED;	/* led on */

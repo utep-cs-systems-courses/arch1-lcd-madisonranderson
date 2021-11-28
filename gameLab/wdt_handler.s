@@ -8,7 +8,7 @@
 	.text
 	
 
-	.extern redrawScreen
+	.extern refresh
 	.extern wdt_c_handler
 WDT:
 	; start of prologue
@@ -39,7 +39,7 @@ WDT:
 	POP	R13
 	POP	R14
 	POP	R15
-	cmp	#0, &redrawScreen
+	cmp	#0, &refresh
 	jz	dont_wake
 	and	#0xffef, 0(r1)	; clear CPU off in saved SR
 dont_wake:	
