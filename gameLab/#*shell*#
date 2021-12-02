@@ -1,0 +1,135 @@
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make load
+msp430loader.sh wakedemo.elf
+check 
+Detected msp430 dev kit
+/opt/ti/uniflash/dslite.sh --config /opt/ti/uniflash/MSP430G2553.ccxml -f  wakedemo.elf
+Executing the following command:
+> /opt/ti/uniflash_5.1.0/deskdb/content/TICloudAgent/linux/ccs_base/DebugServer/bin/DSLite flash --config /opt/ti/uniflash/MSP430G2553.ccxml -f wakedemo.elf
+
+For more details and examples, please refer to the UniFlash Quick Start guide.
+
+info: MSP430:  Flash/FRAM usage is 2880 bytes. RAM usage is 0 bytes.
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> cd ..
+student@systems-vm:~/projects/arch1-lcd-madisonranderson> ls
+gameLab  h  lcdLib  lib  LICENSE  Makefile  README.md  timerLib  wakedemo
+student@systems-vm:~/projects/arch1-lcd-madisonranderson> cd ..
+student@systems-vm:~/projects> ls
+arch1-lcd-madisonranderson      project-zero-madisonranderson  tokenizer-madisonranderson
+project2-game-madisonranderson  test
+student@systems-vm:~/projects> cd project2-game-madisonranderson/
+student@systems-vm:~/projects/project2-game-madisonranderson> LS
+If 'LS' is not a typo you can use command-not-found to lookup the package that contains it, like this:
+    cnf LS
+student@systems-vm:~/projects/project2-game-madisonranderson> ls
+blinkProject  demos  project  README.md
+student@systems-vm:~/projects/project2-game-madisonranderson> cd project/
+student@systems-vm:~/projects/project2-game-madisonranderson/project> ls
+blink  blinkProject  buzzerProject  h  lib  README.md  timerLib  toyProject
+student@systems-vm:~/projects/project2-game-madisonranderson/project> cd toyProject/
+student@systems-vm:~/projects/project2-game-madisonranderson/project/toyProject> ls
+button.elf    led.c                    README.md        switches.h
+buttonMain.c  led.c~                   stateMachine.c   switches.h~
+buttonMain.o  led.h                    stateMachine.c~  switches.o
+buzzer.c      led.o                    stateMachine.h   toggle_green.o
+buzzer.c~     Makefile                 stateMachine.h~  toggle_green.s
+buzzer.h      p1_interrupt_handler.c   stateMachine.o   toggle_green.s~
+buzzer.h~     p1_interrupt_handler.c~  switches.c       wdInterruptHandler.c
+buzzer.o      p1_interrupt_handler.o   switches.c~      wdInterruptHandler.o
+student@systems-vm:~/projects/project2-game-madisonranderson/project/toyProject> make load
+msp430loader.sh button.elf
+check 
+Detected msp430 dev kit
+/opt/ti/uniflash/dslite.sh --config /opt/ti/uniflash/MSP430G2553.ccxml -f  button.elf
+Executing the following command:
+> /opt/ti/uniflash_5.1.0/deskdb/content/TICloudAgent/linux/ccs_base/DebugServer/bin/DSLite flash --config /opt/ti/uniflash/MSP430G2553.ccxml -f button.elf
+
+For more details and examples, please refer to the UniFlash Quick Start guide.
+
+info: MSP430:  Flash/FRAM usage is 1726 bytes. RAM usage is 0 bytes.
+student@systems-vm:~/projects/project2-game-madisonranderson/project/toyProject> cd ..
+student@systems-vm:~/projects/project2-game-madisonranderson/project> cd ..
+student@systems-vm:~/projects/project2-game-madisonranderson> ls
+blinkProject  demos  project  README.md
+student@systems-vm:~/projects/project2-game-madisonranderson> cd ..
+student@systems-vm:~/projects> ls
+arch1-lcd-madisonranderson      project-zero-madisonranderson  tokenizer-madisonranderson
+project2-game-madisonranderson  test
+student@systems-vm:~/projects> cd arch1-lcd-madisonranderson/
+student@systems-vm:~/projects/arch1-lcd-madisonranderson> ls
+gameLab  h  lcdLib  lib  LICENSE  Makefile  README.md  timerLib  wakedemo
+student@systems-vm:~/projects/arch1-lcd-madisonranderson> cd gameLab/
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf wakedemo.o buzzer.o wdt_handler.o lcddraw.o -lTimer -lLcd 
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o wakedemo.o wakedemo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf wakedemo.o buzzer.o wdt_handler.o lcddraw.o -lTimer -lLcd 
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o wakedemo.o wakedemo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf wakedemo.o buzzer.o wdt_handler.o lcddraw.o -lTimer -lLcd 
+msp430loader.sh wakedemo.elf
+check 
+Detected msp430 dev kit
+/opt/ti/uniflash/dslite.sh --config /opt/ti/uniflash/MSP430G2553.ccxml -f  wakedemo.elf
+Executing the following command:
+> /opt/ti/uniflash_5.1.0/deskdb/content/TICloudAgent/linux/ccs_base/DebugServer/bin/DSLite flash --config /opt/ti/uniflash/MSP430G2553.ccxml -f wakedemo.elf
+
+For more details and examples, please refer to the UniFlash Quick Start guide.
+
+info: MSP430:  Flash/FRAM usage is 2952 bytes. RAM usage is 0 bytes.
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o wakedemo.o wakedemo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf wakedemo.o buzzer.o wdt_handler.o lcddraw.o -lTimer -lLcd 
+msp430loader.sh wakedemo.elf
+check 
+Detected msp430 dev kit
+/opt/ti/uniflash/dslite.sh --config /opt/ti/uniflash/MSP430G2553.ccxml -f  wakedemo.elf
+Executing the following command:
+> /opt/ti/uniflash_5.1.0/deskdb/content/TICloudAgent/linux/ccs_base/DebugServer/bin/DSLite flash --config /opt/ti/uniflash/MSP430G2553.ccxml -f wakedemo.elf
+
+For more details and examples, please refer to the UniFlash Quick Start guide.
+
+info: MSP430:  Flash/FRAM usage is 2962 bytes. RAM usage is 0 bytes.
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o wakedemo.o wakedemo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf wakedemo.o buzzer.o wdt_handler.o lcddraw.o -lTimer -lLcd 
+msp430loader.sh wakedemo.elf
+check 
+Detected msp430 dev kit
+/opt/ti/uniflash/dslite.sh --config /opt/ti/uniflash/MSP430G2553.ccxml -f  wakedemo.elf
+Executing the following command:
+> /opt/ti/uniflash_5.1.0/deskdb/content/TICloudAgent/linux/ccs_base/DebugServer/bin/DSLite flash --config /opt/ti/uniflash/MSP430G2553.ccxml -f wakedemo.elf
+
+For more details and examples, please refer to the UniFlash Quick Start guide.
+
+info: MSP430:  Flash/FRAM usage is 2988 bytes. RAM usage is 0 bytes.
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o wakedemo.o wakedemo.c
+wakedemo.c: In function 'state_button4':
+wakedemo.c:150:3: warning: implicit declaration of function 'superMarioTheme' [-Wimplicit-function-declaration]
+   superMarioTheme();
+   ^~~~~~~~~~~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'superMarioTheme':
+buzzer.c:16:10: error: 'counter' undeclared (first use in this function); did you mean 'count'?
+   switch(counter){
+          ^~~~~~~
+          count
+buzzer.c:16:10: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: buzzer.o] Error 1
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> 
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o wakedemo.elf wakedemo.o buzzer.o wdt_handler.o lcddraw.o -lTimer -lLcd 
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> make load
+msp430loader.sh wakedemo.elf
+check 
+Detected msp430 dev kit
+/opt/ti/uniflash/dslite.sh --config /opt/ti/uniflash/MSP430G2553.ccxml -f  wakedemo.elf
+Executing the following command:
+> /opt/ti/uniflash_5.1.0/deskdb/content/TICloudAgent/linux/ccs_base/DebugServer/bin/DSLite flash --config /opt/ti/uniflash/MSP430G2553.ccxml -f wakedemo.elf
+
+For more details and examples, please refer to the UniFlash Quick Start guide.
+
+info: MSP430:  Flash/FRAM usage is 3052 bytes. RAM usage is 0 bytes.
+student@systems-vm:~/projects/arch1-lcd-madisonranderson/gameLab> 

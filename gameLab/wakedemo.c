@@ -1,5 +1,6 @@
 #include <msp430.h>
 #include <libTimer.h>
+#include "buzzer.h"
 #include "lcdutils.h"
 #include "lcddraw.h"
 
@@ -145,13 +146,21 @@ void state_button3() {
   }
 };
 
-void state_button4() { clearScreen(COLOR_BLUE); };
+void state_button4() {
+  superMarioTheme();
+  drawString11x16(40, 5,"END!",COLOR_RED, COLOR_BLUE);
+  clearScreen(COLOR_BLUE);
+};
 
 void default_state() {
   if(refresh) {
     refresh = 0;
     currentRow = nextRow;
+  } else {
+    drawString11x16(80,80,"Let's stack!!",COLOR_RED, COLOR_BLUE);
   }
+  //drawString11x16(80,80,"Let's stack!!",COLOR_RED, COLOR_BLUE);
+  buzzer_set_period(0);
 };
 
 void selectState()
@@ -173,7 +182,7 @@ void main()
   configureClocks();
   lcd_init();
   switch_init();
-  
+  buzzer_init();
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);	              /**< GIE (enable interrupts) */
   

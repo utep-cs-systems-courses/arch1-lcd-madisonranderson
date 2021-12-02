@@ -10,13 +10,15 @@ AS              = msp430-elf-gcc -mmcu=${CPU} -c
 all:wakedemo.elf
 
 #additional rules for files
-wakedemo.elf: ${COMMON_OBJECTS} wakedemo.o wdt_handler.o lcddraw.o
+wakedemo.elf: ${COMMON_OBJECTS} wakedemo.o buzzer.o wdt_handler.o lcddraw.o
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
 load: wakedemo.elf
 	msp430loader.sh $^
 
 lcddraw.o: lcddraw.h lcddraw.c
+
+buzzer.c: buzzer.h
 
 clean:
 	rm -f *.o *.elf
